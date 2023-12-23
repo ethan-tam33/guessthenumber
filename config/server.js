@@ -1,18 +1,15 @@
 const express = require('express')
 const app = express()
-const fs = require('fs');
+const path = require('path');
 const port = process.env.PORT || 3000
+const parentDir = path.resolve(__dirname, '..');
 
-// app.get('/', (req, res) => {
-//     res.send('<h1>Hellbo World</h1>');
-//   });    
+//app.use("/src", express.static('./src/'));
 
-// GET request to the root of the app 
+app.use("/src", express.static(path.join(parentDir + '/src/')));
+
 app.get('/', (req,res) => { 
-  
-    // Sending index.html file for GET request 
-    // to the root of the app 
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(parentDir + '/index.html');
 }); 
 
 console.log(__dirname)
