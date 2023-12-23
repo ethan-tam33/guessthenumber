@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import submitForm from './Submit.js'
 
-function Chat() {
+function Chat(props) {
     const [questions, setQuestions] = useState(0)
 
     return (
@@ -10,9 +10,8 @@ function Chat() {
 
             <input type="text" id="userInput" placeholder="Type here"></input>
 
-            <button type="button" onClick={() => submitForm(questions, setQuestions)}>Submit</button>
+            <button type="button" onClick={() => submitForm(questions, setQuestions, props.number)}>Submit</button>
 
-            {/* <script src="Submit.js"></script> */}
         </>
     )
     
