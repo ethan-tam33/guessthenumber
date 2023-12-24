@@ -7,10 +7,16 @@ function App() {
   console.log(number)
   return (
     <>
-      <h1>Guess the Number</h1>
+      <div class='container'>
+        <h1>Guess the Number</h1>
 
-      <p>The number is between and including 0 and 100.</p>
-      <Chat number={number}></Chat>
+        <p>The chosen number is between and including 0 and 100.</p>
+
+        <Chat number={number}></Chat>
+      </div>
+      
+     
+      
     </>
     
 

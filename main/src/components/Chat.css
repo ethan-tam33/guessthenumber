@@ -1,0 +1,20 @@
+.text {
+    width: 300px;
+    height: 100px;
+    font-family: 'Courier New', 'monospace';
+    font-size: 16px;
+  }
+
+.button {
+    padding: 15px 32px;
+    font-size: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Courier New', 'monospace';
+}
+
+.biggerImage {
+    width: 100px;
+    height: 100px;
+  }
