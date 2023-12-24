@@ -23,6 +23,11 @@ function submitForm(questions, setQuestions, number) {
     // check if user found the correct number
     if (userInput.includes(' ' + number)) {
         console.log('yay!!')
+
+        // add congratulations sentence like "Congrats, the number was 8! You asked 11 questions."
+        // disable the submit button?
+
+
     }
 
     // send user input to chatgpt
