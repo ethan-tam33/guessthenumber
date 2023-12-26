@@ -65,8 +65,6 @@ function submitForm(questions, setQuestions, number) {
         questions++;
         showText("Congrats, the number was " + number + "! You asked " + questions + " questions." )
         return;
-        // add congratulations sentence like "Congrats, the number was 8! You asked 11 questions."
-        // disable the submit button?
     }
 }
 
