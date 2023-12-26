@@ -63,7 +63,11 @@ function submitForm(questions, setQuestions, number) {
     if (userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?')) {
         solved = true;
         questions++;
-        showText("Congrats, the number was " + number + "! You asked " + questions + " questions." )
+        if (questions == 1) {
+            showText("Congrats, the number was " + number + "! You asked " + questions + " question." )
+        } else {
+            showText("Congrats, the number was " + number + "! You asked " + questions + " questions." )
+        }
         return;
     }
 }
