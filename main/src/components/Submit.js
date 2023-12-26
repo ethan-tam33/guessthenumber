@@ -1,5 +1,7 @@
 // import OpenAI from "openai";
 
+// make sure to specify to chatgpt to only answer yes/no questions in a yes or no format.
+
 // const openaiApiKey = process.env.OPENAI_API_KEY;
 // const openai = new OpenAI({apiKey : openaiApiKey});
 
@@ -27,26 +29,22 @@ function addNewQuestion(question, output) {
     currQuestions.appendChild(newQuestion); 
 }
 
+var solved = false;
+
 function submitForm(questions, setQuestions, number) {
     // get user input
     const userInput = document.getElementById('userInput').value;
-    console.log(typeof(userInput))
 
-    // userInput must contain some string
-    if (userInput === "") {
+    // userInput must contain some string and game cannot be solved already
+    if (userInput === "" || solved) {
         return;
     }
 
 
     setQuestions(questions + 1)
 
-    // check if user found the correct number
-    if (userInput.includes(' ' + number)) {
-        console.log('yay!!')
-
-        // add congratulations sentence like "Congrats, the number was 8! You asked 11 questions."
-        // disable the submit button?
-    }
+    // clear textarea once button is clicked
+    document.getElementById("userInput").value = "";
 
     // send user input to chatgpt
     // const chatGPTOutput = askChatGPT(userInput);
@@ -54,18 +52,22 @@ function submitForm(questions, setQuestions, number) {
 
     // chatGPT output appears onscreen
     // showText(chatGPTOutput)
-    showText("helloooooo")
-
-
+    showText(chatGPTOutput)
 
     console.log(userInput)
-
-    // clear textarea once button is clicked
-    document.getElementById("userInput").value = "";
 
     // append new question to questions asked
     addNewQuestion(userInput, chatGPTOutput);
 
+    // check if user found the correct number
+    if (userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?')) {
+        solved = true;
+        questions++;
+        showText("Congrats, the number was " + number + "! You asked " + questions + " questions." )
+        return;
+        // add congratulations sentence like "Congrats, the number was 8! You asked 11 questions."
+        // disable the submit button?
+    }
 }
 
 export default submitForm

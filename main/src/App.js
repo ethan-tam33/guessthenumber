@@ -8,7 +8,7 @@ function App() {
   console.log(number)
   return (
     <>
-      <div class='container'>
+      <div className='container'>
 
         <Navbar></Navbar>
 
