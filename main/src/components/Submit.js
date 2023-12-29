@@ -1,18 +1,19 @@
-// import OpenAI from "openai";
+import OpenAI from "openai";
 
 // make sure to specify to chatgpt to only answer yes/no questions in a yes or no format.
 
 // const openaiApiKey = process.env.OPENAI_API_KEY;
 // const openai = new OpenAI({apiKey : openaiApiKey});
+const openai = new OpenAI();
 
-// async function askChatGPT(input) {
-//     const completion = await openai.chat.completions.create({
-//         messages: [{ role: "system", content: input }],
-//         model: "gpt-3.5-turbo",
-//       });
+async function askChatGPT(input) {
+    const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: input }],
+        model: "gpt-3.5-turbo",
+      });
 
-//     return completion[0];
-// }
+    return completion[0].message.content;
+}
 
 
 // hmm i'd like this function to also allow the text to generate char by char
@@ -40,15 +41,14 @@ function submitForm(questions, setQuestions, number) {
         return;
     }
 
-
     setQuestions(questions + 1)
 
     // clear textarea once button is clicked
     document.getElementById("userInput").value = "";
 
     // send user input to chatgpt
-    // const chatGPTOutput = askChatGPT(userInput);
-    const chatGPTOutput = "Yes."
+    const chatGPTOutput = askChatGPT(userInput + " Answer only with just yes or no.");
+    // const chatGPTOutput = "Yes."
 
     // chatGPT output appears onscreen
     // showText(chatGPTOutput)
