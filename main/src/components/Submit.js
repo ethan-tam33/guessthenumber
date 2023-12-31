@@ -65,7 +65,7 @@ function submitForm(questions, setQuestions, number) {
     addNewQuestion(userInput, chatGPTOutput);
 
     // check if user found the correct number
-    if (userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?') || (userInput.includes('' + number) && numberAtEnd(userInput, number))) {
+    if (userInput === number.toString() || userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?') || (userInput.includes(' ' + number) && numberAtEnd(userInput, number))) {
         solved = true;
         questions++;
         if (questions == 1) {
