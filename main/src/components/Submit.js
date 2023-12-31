@@ -4,16 +4,16 @@ import OpenAI from "openai";
 
 // const openaiApiKey = process.env.OPENAI_API_KEY;
 // const openai = new OpenAI({apiKey : openaiApiKey});
-const openai = new OpenAI();
+// const openai = new OpenAI();
 
-async function askChatGPT(input) {
-    const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: input }],
-        model: "gpt-3.5-turbo",
-      });
+// async function askChatGPT(input) {
+//     const completion = await openai.chat.completions.create({
+//         messages: [{ role: "system", content: input }],
+//         model: "gpt-3.5-turbo",
+//       });
 
-    return completion[0].message.content;
-}
+//     return completion[0].message.content;
+// }
 
 
 // hmm i'd like this function to also allow the text to generate char by char
@@ -28,6 +28,11 @@ function addNewQuestion(question, output) {
     const newQuestion = document.createElement('li');
     newQuestion.textContent = question + " -> " + output;
     currQuestions.appendChild(newQuestion); 
+}
+
+function numberAtEnd(question, number) {
+    const lenNumber = number.toString().length;
+    return question.substr(lenNumber * -1) === number.toString();
 }
 
 var solved = false;
@@ -47,8 +52,8 @@ function submitForm(questions, setQuestions, number) {
     document.getElementById("userInput").value = "";
 
     // send user input to chatgpt
-    const chatGPTOutput = askChatGPT(userInput + " Answer only with just yes or no.");
-    // const chatGPTOutput = "Yes."
+    // const chatGPTOutput = askChatGPT(userInput + " Answer only with just yes or no.");
+    const chatGPTOutput = "Yes."
 
     // chatGPT output appears onscreen
     // showText(chatGPTOutput)
@@ -60,7 +65,7 @@ function submitForm(questions, setQuestions, number) {
     addNewQuestion(userInput, chatGPTOutput);
 
     // check if user found the correct number
-    if (userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?')) {
+    if (userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?') || (userInput.includes('' + number) && numberAtEnd(userInput, number))) {
         solved = true;
         questions++;
         if (questions == 1) {
