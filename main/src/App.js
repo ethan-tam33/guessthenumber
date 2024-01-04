@@ -1,30 +1,34 @@
 import './App.css';
 import Navbar from './components/Navbar.js'
-import Chat from './components/Chat.js'
+import Home from './pages/Home.js'
+import Login from './pages/Login.js'
+import CreateAcc from './pages/CreateAcc.js'
 
 function App() {
   const number = Math.floor(Math.random() * 100);
-
   console.log(number)
+
+  let component
+  switch (window.location.pathname) {
+    case "/":
+      component = <Home number={number}></Home>
+      break
+    case "/login":
+      component = <Login/>
+      break
+    case "/createacc":
+      component = <CreateAcc/>
+      break
+  }
   return (
     <>
       <div className='container'>
 
         <Navbar></Navbar>
-
-        <h1>Guess the Number</h1>
-
-        <p>The chosen number is between and including 0 and 100.</p>
-
-        <Chat number={number}></Chat>
+        {component}
         
       </div>
-      
-     
-      
     </>
-    
-
   );
 }
 
