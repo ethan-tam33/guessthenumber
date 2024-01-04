@@ -28,8 +28,6 @@ function Chat(props) {
 
             <h3>Questions Asked</h3>
 
-            {/* should be a numbered list of questions in a flex box?*/}
-
             <div id="questions"></div>
         </>
     )

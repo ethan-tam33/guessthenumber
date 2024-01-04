@@ -1,5 +1,11 @@
+import LoginComp from '../components/auth/CreateAcc.jsx'
+
 function CreateAcc() {
-    return <h1>Create Account</h1>
+    return (
+        <>
+            <LoginComp></LoginComp>
+        </>
+    )
 }
 
 export default CreateAcc
