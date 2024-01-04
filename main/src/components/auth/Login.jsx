@@ -8,6 +8,17 @@ const Login = () => {
 
     const logIn = (e) => {
         e.preventDefault();
+
+        if (!email) {
+            alert("Please enter an email.");
+            return;
+        }
+
+        if (!password) {
+            alert("Please enter a password.");
+            return;
+        }
+
         // login function for button
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {

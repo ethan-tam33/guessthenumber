@@ -3,6 +3,7 @@ import Navbar from './components/Navbar.js'
 import Home from './pages/Home.js'
 import Login from './pages/Login.js'
 import CreateAcc from './pages/CreateAcc.js'
+import AuthDetails from './components/auth/AuthDetails.jsx'
 
 function App() {
   const number = Math.floor(Math.random() * 100);
@@ -26,6 +27,7 @@ function App() {
 
         <Navbar></Navbar>
         {component}
+        <AuthDetails></AuthDetails>
         
       </div>
     </>

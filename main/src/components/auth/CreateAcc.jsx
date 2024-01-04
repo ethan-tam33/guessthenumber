@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
-import { auth } from '../../firebase.js';
+import { auth, database, writeUserData} from '../../firebase.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+// import firebase from 'firebase/compat/app';
+// import 'firebase/database'
 
 const CreateAcc = () => {
     const [email, setEmail] = useState('');
@@ -8,6 +10,17 @@ const CreateAcc = () => {
 
     const createAcc = (e) => {
         e.preventDefault();
+
+        if (!email) {
+            alert("Please enter an email.");
+            return;
+        }
+
+        if (!password) {
+            alert("Please enter a password.");
+            return;
+        }
+
         // login function for button
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -18,6 +31,10 @@ const CreateAcc = () => {
             // error
             console.log(error);
         });
+        
+        // add user to database
+        const userId = 123;
+        writeUserData(userId, email, []);
     };
     return (
         <div className='sign-in-container'>

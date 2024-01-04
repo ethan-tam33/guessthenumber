@@ -1,7 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import { getDatabase, ref, set} from "firebase/database";
+import 'firebase/compat/database'
+// import { set } from "mongoose";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,12 +16,23 @@ const firebaseConfig = {
   storageBucket: "guessthenumber-bf8fb.appspot.com",
   messagingSenderId: "92270326325",
   appId: "1:92270326325:web:a84e7008af3b78d4aaf77c",
-  measurementId: "G-DSKJ1BNM5E"
+  measurementId: "G-DSKJ1BNM5E",
+  databaseURL:"https://guessthenumber-bf8fb-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 // Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
+const auth = getAuth(app);
+const database = getDatabase(app)
+
+const writeUserData = (userId, email, numQuestions) => {
+    const userRef = ref(database, "/users/" + userId);
+    set(userRef, {
+        email: email,
+        numQuestions: numQuestions
+    });
+}
+
+export {auth, database, writeUserData}
