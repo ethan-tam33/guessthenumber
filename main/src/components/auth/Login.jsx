@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { auth } from '../../firebase.js';
+import { auth, updatenumQuestions } from '../../firebase.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
@@ -23,6 +23,7 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // signed up
+            // updatenumQuestions();
             console.log(userCredential);
         })
         .catch((error) => {

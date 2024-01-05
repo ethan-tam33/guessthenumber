@@ -25,16 +25,14 @@ const CreateAcc = () => {
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // signed up
+            const userId = userCredential.user.uid;
+            writeUserData(userId, email);
             console.log(userCredential);
         })
         .catch((error) => {
             // error
             console.log(error);
         });
-        
-        // add user to database
-        const userId = 123;
-        writeUserData(userId, email, []);
     };
     return (
         <div className='sign-in-container'>

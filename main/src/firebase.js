@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getDatabase, ref, set} from "firebase/database";
+import { getDatabase, ref, set, child, get, push, onValue} from "firebase/database";
 import 'firebase/compat/database'
+
 // import { set } from "mongoose";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,12 +28,46 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app)
 
-const writeUserData = (userId, email, numQuestions) => {
+const writeUserData = (userId, email) => {
     const userRef = ref(database, "/users/" + userId);
     set(userRef, {
         email: email,
-        numQuestions: numQuestions
     });
 }
 
-export {auth, database, writeUserData}
+const getValues = () => {
+    const userId = auth.currentUser.uid;
+    const nodeRef = ref(database, `users/${userId}/numQuestions`);
+
+    onValue(nodeRef, (snapshot) => {
+        const data = snapshot.val();
+        for (const key in data) {
+            console.log(data[key]);
+        }
+        console.log(data);
+      });
+}
+
+const updatenumQuestions = (questions) => {
+    const userId = auth.currentUser.uid;
+    const dbRef = ref(database)
+    get(child(dbRef, `users/${userId}`)).then((user) => {
+        // update data if user exists
+        if (user.exists()) {
+            const userData = user.val();
+            if (!('numQuestions' in userData)) {
+                const newNodeRef = child(dbRef, `users/${userId}/newQuestions`);
+                set(newNodeRef, null);
+            }
+            const numQuestionsRef = child(dbRef, `users/${userId}/numQuestions`);
+            push(numQuestionsRef, questions);
+        } else {
+            // otherwise user does not exist
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
+}
+
+export {auth, database, writeUserData, updatenumQuestions, getValues}

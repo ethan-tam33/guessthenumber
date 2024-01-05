@@ -1,3 +1,4 @@
+import {updatenumQuestions, getValues} from '../firebase.js'
 import OpenAI from "openai";
 
 // make sure to specify to chatgpt to only answer yes/no questions in a yes or no format.
@@ -73,6 +74,8 @@ function submitForm(questions, setQuestions, number) {
         } else {
             showText("Congrats, the number was " + number + "! You asked " + questions + " questions." )
         }
+        // getValues();
+        updatenumQuestions(questions);
         return;
     }
 }
