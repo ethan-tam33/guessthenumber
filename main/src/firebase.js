@@ -26,7 +26,7 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
-const database = getDatabase(app)
+const database = getDatabase(app);
 
 const writeUserData = (userId, email) => {
     const userRef = ref(database, "/users/" + userId);
