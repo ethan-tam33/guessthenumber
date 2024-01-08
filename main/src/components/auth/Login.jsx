@@ -6,6 +6,7 @@ import './auth.css'
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const loginError = document.getElementById('loginError');
 
     const logIn = (e) => {
         e.preventDefault();
@@ -27,16 +28,34 @@ const Login = () => {
             console.log(userCredential);
             document.getElementById("loginEmail").value = "";
             document.getElementById("loginPassword").value = "";
+            loginError.innerHTML = 'Success!';
         })
         .catch((error) => {
-            // error
+            // display error
+            const errorCode = error.code;
+            alert("Error: " + error);
             console.log(error);
+            switch (errorCode) {
+                case 'auth/invalid-credential':
+                    loginError.innerHTML = "Invalid email or password. Please try again.";
+                    break;
+                case 'auth/invalid-email':
+                    loginError.innerHTML = "Please use a valid email.";
+                    break;
+                case 'auth/user-not-found':
+                    loginError.innerHTML = "There is no user with this email address.";
+                    break;
+                case 'auth/wrong-password':
+                    loginError.innerHTML = 'Incorrect Password. Please try again.';
+                    break;
+            }
         });
     };
     return (
         <div className='sign-in-container'>
             <form onSubmit={logIn}>
                 <h1>Log In</h1>
+                <p id='loginError'></p>
                 <input 
                     type="email" 
                     placeholder="Enter your email" 

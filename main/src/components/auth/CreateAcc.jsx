@@ -8,6 +8,7 @@ import './auth.css'
 const CreateAcc = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const createAccError = document.getElementById('createAccError');
 
     const createAcc = (e) => {
         e.preventDefault();
@@ -27,20 +28,36 @@ const CreateAcc = () => {
         .then((userCredential) => {
             // signed up
             const userId = userCredential.user.uid;
+            createAccError.innerHTML='';
             writeUserData(userId, email);
             document.getElementById("createEmail").value = "";
             document.getElementById("createPassword").value = "";
             console.log(userCredential);
         })
         .catch((error) => {
-            // error
+            // display error
+            const errorCode = error.code;
             console.log(error);
+            console.log(errorCode);
+            
+            switch (errorCode) {
+                case 'auth/email-already-in-use':
+                    createAccError.innerHTML = "This email is already in use. Please use another email."
+                    break;
+                case 'auth/weak-password':
+                    createAccError.innerHTML = "This password is too weak. Please use a stronger password with at least 6 characters.";
+                    break;
+                case 'auth/invalid-email':
+                    createAccError.innerHTML = "Please use a valid email.";
+                    break;
+            }       
         });
     };
     return (
         <div className='sign-in-container'>
             <form onSubmit={createAcc}>
                 <h1>Create Account</h1>
+                <p id='createAccError'></p>
                 <input 
                     type="email" 
                     placeholder="Enter your email" 
