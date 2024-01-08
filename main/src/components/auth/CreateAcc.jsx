@@ -32,6 +32,7 @@ const CreateAcc = () => {
             writeUserData(userId, email);
             document.getElementById("createEmail").value = "";
             document.getElementById("createPassword").value = "";
+            createAccError.innerHTML = "Success!";
             console.log(userCredential);
         })
         .catch((error) => {
