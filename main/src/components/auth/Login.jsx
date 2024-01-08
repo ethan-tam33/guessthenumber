@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { auth, updatenumQuestions } from '../../firebase.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import './auth.css'
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -23,8 +24,9 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // signed up
-            // updatenumQuestions();
             console.log(userCredential);
+            document.getElementById("loginEmail").value = "";
+            document.getElementById("loginPassword").value = "";
         })
         .catch((error) => {
             // error
@@ -40,16 +42,20 @@ const Login = () => {
                     placeholder="Enter your email" 
                     value={email}
                     onChange = {(e) => setEmail(e.target.value)}
+                    id='loginEmail'
                 ></input>
+
+                <br></br>
 
                 <input 
                     type="password" 
                     placeholder="Enter your password" 
                     value={password}
                     onChange = {(e) => setPassword(e.target.value)}
+                    id='loginPassword'
                 ></input>
                 
-                <button>Log In</button>
+                <button className='button'>Log In</button>
             </form>
         </div>
     )

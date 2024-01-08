@@ -30,7 +30,7 @@ function AuthDetails() {
         });
     };
 
-    return <div>{authUser ? <><p>{`Signed In as ${authUser.email}`}</p> <button onClick={userSignOut}>Sign Out</button></>: <p>Signed Out</p>}</div>;
+    return <div>{authUser ? <><p>{`Signed In as ${authUser.email}`}</p> <button className='signoutbutton' onClick={userSignOut}>Sign Out</button></>: <p>Signed Out</p>}</div>;
 };
 
 export default AuthDetails
