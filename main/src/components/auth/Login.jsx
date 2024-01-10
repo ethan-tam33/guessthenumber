@@ -33,7 +33,6 @@ const Login = () => {
         .catch((error) => {
             // display error
             const errorCode = error.code;
-            alert("Error: " + error);
             console.log(error);
             switch (errorCode) {
                 case 'auth/invalid-credential':
