@@ -1,21 +1,5 @@
 import {updatenumQuestions, getValues} from '../firebase.js'
-import OpenAI from "openai";
-
-// make sure to specify to chatgpt to only answer yes/no questions in a yes or no format.
-
-// const openaiApiKey = process.env.OPENAI_API_KEY;
-// const openai = new OpenAI({apiKey : openaiApiKey});
-// const openai = new OpenAI();
-
-// async function askChatGPT(input) {
-//     const completion = await openai.chat.completions.create({
-//         messages: [{ role: "system", content: input }],
-//         model: "gpt-3.5-turbo",
-//       });
-
-//     return completion[0].message.content;
-// }
-
+import axios from 'axios';
 
 // hmm i'd like this function to also allow the text to generate char by char
 function showText(output) {
@@ -52,32 +36,39 @@ function submitForm(questions, setQuestions, number) {
     // clear textarea once button is clicked
     document.getElementById("userInput").value = "";
 
-    // send user input to chatgpt
-    // const chatGPTOutput = askChatGPT(userInput + " Answer only with just yes or no.");
-    const chatGPTOutput = "Yes."
-
-    // chatGPT output appears onscreen
-    // showText(chatGPTOutput)
-    showText(chatGPTOutput)
-
-    console.log(userInput)
-
-    // append new question to questions asked
-    addNewQuestion(userInput, chatGPTOutput);
-
-    // check if user found the correct number
-    if (userInput === number.toString() || userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?') || (userInput.includes(' ' + number) && numberAtEnd(userInput, number))) {
-        solved = true;
-        questions++;
-        if (questions == 1) {
-            showText("Congrats, the number was " + number + "! You asked " + questions + " question." )
-        } else {
-            showText("Congrats, the number was " + number + "! You asked " + questions + " questions." )
-        }
-        // getValues();
-        updatenumQuestions(questions);
-        return;
+    const options = {
+        method: 'GET',
+        url: 'http://localhost:8000/gpt',
+        params: {number: number, userInput: userInput}
     }
+    
+    axios.request(options).then((response) => {
+        const chatGPTOutput = response.data;
+        console.log(chatGPTOutput);
+
+        // chatGPT output appears onscreen
+        showText(chatGPTOutput)
+
+        console.log(userInput)
+
+        // append new question to questions asked
+        addNewQuestion(userInput, chatGPTOutput);
+
+        // check if user found the correct number
+        if (userInput === number.toString() || userInput.includes(' ' + number + ' ') || userInput.includes(' ' + number + '?') || (userInput.includes(' ' + number) && numberAtEnd(userInput, number))) {
+            solved = true;
+            questions++;
+            if (questions == 1) {
+                showText("Congrats, the number was " + number + "! You asked " + questions + " question." )
+            } else {
+                showText("Congrats, the number was " + number + "! You asked " + questions + " questions." )
+            }
+            updatenumQuestions(questions);
+            return;
+        }
+    }).catch((error) => {
+        console.error(error);
+    })
 }
 
 export default submitForm
