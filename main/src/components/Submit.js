@@ -43,8 +43,13 @@ function submitForm(questions, setQuestions, number) {
     }
     
     axios.request(options).then((response) => {
-        const chatGPTOutput = response.data;
+        let chatGPTOutput = response.data;
         console.log(chatGPTOutput);
+
+        // check and adjust for proper punctuation
+        if (!(chatGPTOutput.includes('.'))) {
+            chatGPTOutput += ".";
+        }
 
         // chatGPT output appears onscreen
         showText(chatGPTOutput)

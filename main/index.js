@@ -27,7 +27,7 @@ app.get('/gpt', (req,res) => {
     const number = req.query.number;
     const question = req.query.userInput;
     const messages = [{role: "system", content: "You are a helpful assistant."},
-                    {role: "user", content: "Please answer only Yes or No to all questions."}]
+                      {role: "user", content: "Please answer only Yes or No to all questions."}]
 
     askChatGPT(messages, number + " " + question)
     .then((result) => {

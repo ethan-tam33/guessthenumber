@@ -32,6 +32,7 @@ const writeUserData = (userId, email) => {
     const userRef = ref(database, "/users/" + userId);
     set(userRef, {
         email: email,
+        minQuestions: Number.MAX_SAFE_INTEGER
     });
 }
 
@@ -61,6 +62,18 @@ const updatenumQuestions = (questions) => {
             }
             const numQuestionsRef = child(dbRef, `users/${userId}/numQuestions`);
             push(numQuestionsRef, questions);
+
+            get(child(dbRef, `users/${userId}/minQuestions`))
+            .then((snapshot) => {
+                const currMinQuestions = snapshot.val();
+                if (currMinQuestions > questions) {
+                    // replace node value if new try is less than current node value
+                    const minQuestionsRef = child(dbRef, `users/${userId}/minQuestions`);
+                    set(minQuestionsRef, questions);
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
         } else {
             // otherwise user does not exist
             console.log("No data available");
