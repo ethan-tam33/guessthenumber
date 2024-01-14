@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { auth, updatenumQuestions } from '../../firebase.js';
+import { auth } from '../../firebase.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import './auth.css'
 

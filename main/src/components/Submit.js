@@ -1,4 +1,4 @@
-import {updatenumQuestions, getValues} from '../firebase.js'
+import {updatenumQuestions} from '../firebase.js'
 import axios from 'axios';
 
 // hmm i'd like this function to also allow the text to generate char by char
